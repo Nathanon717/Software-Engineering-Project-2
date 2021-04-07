@@ -1,0 +1,27 @@
+I decided to implement the board and pieces as an 8x8 2d integer array, with 0 representing an empty square,
+1 representing a square with a black piece on it, and 2 for a square with a white piece. The first name entered
+would be the name of the person with the black pieces, and the second would be white, their names stored
+in the strings name1 and name2, and their scores as the integers blackScore and whiteScore. This data would be
+used to alternate between each players turns by having both players turns programmed within games main loop,
+the code for each player using their corresponding variables. I implemented the game logic by passing the
+coordinates of a move, the colour of the piece, and the state of the board it was to be placed on, into a
+function called isValid, which checks if the move is valid, and if the move is valid, the board is updated
+appropriately, the function returns true, and it becomes the other players turn. If the move is invalid, the
+function returns false and the player is prompted to enter a valid move. The function works by first checking if
+the square is empty, then ruling out directions from the square that could have a valid sequence based on the
+location of the square, as a valid sequence must contain at least 2 pieces. For example a piece placed on a1 can
+only capture pieces to its right, bottom right, or below it. The remaining directions are then checked for a
+sequence of pieces that allow for the move to be played. For example, to check to the right, for the move
+black a1, it is first verified that b1 has a white piece. If so, each square along row 1 is checked until
+either an empty square is found (no valid sequence in this direction), or a black piece is found, in which
+case the move is valid and every piece on row 1 from the square before the black piece was found, back to b1
+is replaced with a black piece. If the player chooses to pass, the function checkMoves is called, which
+verifies if an attempt to pass is valid by checking for legal moves. It does this by checking each square
+of the board one by one to see if current colour can legally go there, returns false after the first legal move is
+found, and prompts the player to enter a valid move. If no square on the board can be played as a legal move, the
+function returns true and the pass is allowed. The function counter counts the black pieces in play to update black's
+score, which is subtracted from the total number of pieces in play to update white's score. If one player is allowed
+to pass and then on the following turn, the other player also is, the game ends as no more moves can be played.
+Alternatively the game will end if either player's score reaches 0, or if there are 64 pieces on the board. When
+the game ends, the scores are compared to see which player won or if it was a tie, and the results and date/time are
+appended to the .txt file.
